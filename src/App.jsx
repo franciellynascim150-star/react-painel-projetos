@@ -1,122 +1,91 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
-
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+import Cabecalho from "./components/Cabecalho";
+import Rodape from "./components/Rodape";
+import Resumo from "./components/Resumo";
+import Secao from "./components/Secao";
+import ProjetoCard from "./components/ProjetoCard";
+import "./app.css";
+const projetos = [
+{
+id: 1,
+titulo: "site de jogos",
+descricao: "site para apresentar jogos.",
+responsavel: "luan",
+status: "Concluído",
+tecnologias: ["HTML", "CSS"],
+destaque: true
+},
+{
+id: 2,
+titulo: "loja virtual",
+descricao: "loja para vender produtos.",
+responsavel: "ana",
+status: "Em desenvolvimento",
+tecnologias: ["React", "CSS"],
+destaque: false
+},
+{
+id: 3,
+titulo: "sistema escolar",
+descricao: "cadastro de alunos.",
+responsavel: "pedro",
+status: "Planejamento",
+tecnologias: ["JavaScript"],
+destaque: false
+},
+{
+id: 4,
+titulo: "lista de tarefas",
+descricao: "organização de atividades.",
+responsavel: "maria",
+status: "Concluído",
+tecnologias: ["HTML", "JavaScript"],
+destaque: false
+},
+{
+id: 5,
+titulo: "portal de notícias",
+descricao: "site para publicar notícias.",
+responsavel: "joão",
+status: "Em desenvolvimento",
+tecnologias: ["React", "CSS"],
+destaque: true
+},
+{
+id: 6,
+titulo: "controle financeiro",
+descricao: "organização de despesas.",
+responsavel: "julia",
+status: "Concluído",
+tecnologias: ["JavaScript", "CSS"],
+destaque: false
 }
+];
+function App() {
+const concluidos = projetos.filter(
+(p) => p.status === "Concluído"
+).length;
+const emDesenvolvimento = projetos.filter(
+(p) => p.status === "Em desenvolvimento"
+).length;
+return (
+<main className="painel">
+<Cabecalho />
+ <Resumo
+    total={projetos.length}
+    concluidos={concluidos}
+    emDesenvolvimento={emDesenvolvimento}
+  />
 
-export default App
+  <Secao titulo="projetos da turma">
+    <div className="projetos">
+      {projetos.map((p) => (
+        <ProjetoCard key={p.id} {...p} />
+      ))}
+    </div>
+  </Secao>
+
+  <Rodape />
+</main>
+);
+}
+export default App;
